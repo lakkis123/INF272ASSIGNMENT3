@@ -1,0 +1,42 @@
+﻿@model List<INF272ASSIGNMENT3.Models.borrows>
+
+<h2>Current Loans Report</h2>
+
+<div id="chart"></div>
+
+<script>
+  var data = @Html.Raw(Json.Encode(Model));
+   
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<form action="@Url.Action("SaveReport")" method="post">
+    <label for="filename">Filename:</label>
+    <input type="text" id="filename" name="filename" required>
+
+    <label for="fileType">File Type:</label>
+    <select id="fileType" name="fileType" required>
+        <option value="excel">Excel</option>
+        <option value="pdf">PDF</option>
+    </select>
+
+    <input type="submit" value="Save Report">
+</form>
+
+<h2>Report Archive</h2>
+@if (ViewBag.Reports != null)
+{
+    foreach (var report in ViewBag.Reports)
+    {
+        <li>
+            @report.Filename - @report.DateCreated
+            <a href="@Url.Action("DownloadReport", new { filename = report.Filename })">Download</a>
+            <a href="@Url.Action("DeleteReport", new { filename = report.Filename })">Delete</a>
+        </li>
+    }
+}
+else
+{
+    <p>No reports found.</p>
+}
+

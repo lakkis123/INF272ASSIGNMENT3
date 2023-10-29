@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Students</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createStudentModal">Create Student</button>
+            <div id="createStudentModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create Student</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="@Url.Action("Create", "students")" method="post">
+                                <div class="form-group">
+                                    <label for="studentName">Name:</label>
+                                    <input type="text" class="form-control" id="studentName" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="studentSurname">Surname:</label>
+                                    <input type="text" class="form-control" id="studentSurname" name="surname" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                </tr>
+                @foreach (var student in ViewBag.Students)
+                {
+                    <tr>
+                        <td>@student.studentId</td>
+                        <td>@student.name</td>
+                        <td>@student.surname</td>
+                    </tr>
+                }
+            </table>
+
+            <h2>Books</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createBookModal">Create Book</button>
+            <div id="createBookModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create Student</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="@Url.Action("Create", "books")" method="post">
+                                <div class="form-group">
+                                    <label for="bookName">Name:</label>
+                                    <input type="text" class="form-control" id="bookName" name="name" required>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                </tr>
+                @foreach (var book in ViewBag.Books)
+                {
+                    <tr>
+                        <td>@book.bookId</td>
+                        <td>@book.name</td>
+                        <td>@book.authorId</td>
+                        <td>@book.typeId</td>
+                    </tr>
+                }
+            </table>
+
+
+            <div class="d-flex justify-content-between">
+                @if (ViewBag.PageNumber > 1)
+                {
+                    <a class="btn btn-secondary" href="@Url.Action("Home", new { page = ViewBag.PageNumber - 1 })">Previous</a>
+                }
+                @if (ViewBag.Students.Count == ViewBag.PageSize || ViewBag.Books.Count == ViewBag.PageSize)
+                {
+                    <a class="btn btn-secondary" href="@Url.Action("Home", new { page = ViewBag.PageNumber + 1 })">Next</a>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

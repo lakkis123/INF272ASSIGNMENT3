@@ -1,0 +1,151 @@
+﻿@model List<INF272ASSIGNMENT3.Models.borrows>
+
+<h1>Welcome to the Loan Reports Page</h1>
+<p>Here you can view the current loans report, save it, and access the report archive.</p>
+
+<h2>Current Loans Report</h2>
+<p>The graph below shows the number of loans for each month.</p>
+
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['JAN', 'FEB', 'MARCH', 'APRIL', 'MAY', 'JUNE'],
+            datasets: [{
+                label: '# of loans',
+                data: [12, 19, 3, 15, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<h2>Save the Report</h2>
+<p>You can save the current loans report as an Excel or PDF file. Please enter a filename and select the file type.</p>
+
+<form action="@Url.Action("SaveReport")" method="post">
+    <label for="filename">Filename:</label>
+    <input type="text" id="filename" name="filename" required>
+
+    <label for="fileType">File Type:</label>
+    <select id="fileType" name="fileType" required>
+        <option value="excel">Excel</option>
+        <option value="pdf">PDF</option>
+    </select>
+
+    <input type="submit" value="Save Report">
+</form>
+
+<h2>Report Archive</h2>
+<p>Here you can download or delete previously saved reports.</p>
+
+@if (ViewBag.Reports != null)
+{
+    foreach (var report in ViewBag.Reports)
+    {
+        <li>
+            @report.Filename - @report.DateCreated
+            <a href="@Url.Action("DownloadReport", new { filename = report.Filename })">Download</a> |
+            <a href="@Url.Action("DeleteReport", new { filename = report.Filename })">Delete</a>
+        </li>
+    }
+}
+else
+{
+    <p>No reports found.</p>
+}
+
+
+
+@*<h2>Current Loans Report</h2>
+
+    <div>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var ctx = document.getElementById('chart').getContext('2d');
+            var chartData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData));
+
+            var labels = chartData.map(function(item) { return 'Month ' + item.Month; });
+            var data = chartData.map(function(item) { return item.Count; });
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Loans',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+
+    </script>
+
+
+    <form action="@Url.Action("SaveReport")" method="post">
+        <label for="filename">Filename:</label>
+        <input type="text" id="filename" name="filename" required>
+
+        <label for="fileType">File Type:</label>
+        <select id="fileType" name="fileType" required>
+            <option value="excel">Excel</option>
+            <option value="pdf">PDF</option>
+        </select>
+
+        <input type="submit" value="Save Report">
+    </form>
+
+    <h2>Report Archive</h2>
+    @if (ViewBag.Reports != null)
+    {
+        foreach (var report in ViewBag.Reports)
+        {
+            <li>
+                @report.Filename - @report.DateCreated
+                <a href="@Url.Action("DownloadReport", new { filename = report.Filename })">Download</a>
+                <a href="@Url.Action("DeleteReport", new { filename = report.Filename })">Delete</a>
+            </li>
+        }
+    }
+    else
+    {
+        <p>No reports found.</p>
+    }-->*@

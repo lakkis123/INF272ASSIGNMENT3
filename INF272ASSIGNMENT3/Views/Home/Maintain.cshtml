@@ -1,0 +1,273 @@
+﻿@{
+        ViewBag.Title = "Maintain";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Types</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var type in ViewBag.Types)
+                {
+                    <tr>
+                        <td>@type.typeId</td>
+                        <td>@type.name</td>
+                        <td>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal">Details</button>
+
+
+                            <div id="detailsModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Details</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>ID: @type.typeId</p>
+                                            <p>Name: @type.name</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">Update</button>
+
+                            <div id="updateModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Update</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="@Url.Action("Edit", "types", new { id = type.typeId })" method="post">
+                                                <label for="typeName">Name:</label>
+                                                <input type="text" id="typeName" name="name" value="@type.name" required>
+                                                <input type="submit" value="Update">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                            <!-- Delete Modal -->
+                            <div id="deleteModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Delete</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this item?</p>
+                                            <button onclick="location.href='@Url.Action("Delete", "types", new { id = type.typeId })'">Yes, delete it</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+</tr>
+                }
+
+            </table>
+            <div>
+                @if (ViewBag.PageNumber > 1)
+                {
+                    <a href="@Url.Action("Maintain", new { page = ViewBag.PageNumber - 1 })">Previous</a>
+                }
+                @if (ViewBag.Types.Count == ViewBag.PageSize || ViewBag.Authors.Count == ViewBag.PageSize || ViewBag.Borrows.Count == ViewBag.PageSize)
+                {
+                    <a href="@Url.Action("Maintain", new { page = ViewBag.PageNumber + 1 })">Next</a>
+                }
+            </div>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "types")'">Create Type</button>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Authors</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var author in ViewBag.Authors)
+                {
+                    <tr>
+                        <td>@author.authorId</td>
+                        <td>@author.name</td>
+                        <td>@author.surname</td>
+                        <td>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsaModal">Details</button>
+
+
+                            <div id="detailsaModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Details</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>ID: @author.authorId</p>
+                                            <p>Name: @author.name</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateaModal">Update</button>
+
+                            <div id="updateaModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Update</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="@Url.Action("Edit", "types", new { id = author.authorId })" method="post">
+                                                <label for="typeName">Name:</label>
+                                                <input type="text" id="typeName" name="name" value="@author.name" required>
+                                                <input type="submit" value="Update">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteaModal">Delete</button>
+                            
+                            <div id="deleteaModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                 
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Delete</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this item?</p>
+                                            <button onclick="location.href='@Url.Action("Delete", "types", new { id = author.authorId })'">Yes, delete it</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "authors")'">Create author</button>
+        </div>
+
+
+        <div class="col-md-4">
+            <h2>Borrows</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th> Student ID</th>
+                    <th>Taken Date</th>
+                    <th>Brought Date</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var borrow in ViewBag.Borrows)
+                {
+                    <tr>
+                        <td>@borrow.borrowId</td>
+                        <td>@borrow.studentId</td>
+                        <td>@borrow.takenDate</td>
+                        <td>@borrow.broughtDate</td>
+                        
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsbModal">Details</button>
+
+
+                            <div id="detailsbModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Details</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>ID: @borrow.borrowId</p>
+                                            <p>Name: @borrow.takenDate</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatebModal">Update</button>
+
+                            <div id="updatebModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Update</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="@Url.Action("Edit", "types", new { id = borrow.borrowId })" method="post">
+                                                <label for="typeName">Name:</label>
+                                                <input type="text" id="typeName" name="Taken Date" value="@borrow.takenDate" required>
+                                                <input type="submit" value="Update">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deletebModal">Delete</button>
+                            
+                            <div id="deletebModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                   
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h4 class="modal-title">Delete</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this item?</p>
+                                            <button onclick="location.href='@Url.Action("Delete", "types", new { id = borrow.borrowId })'">Yes, delete it</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "borrows")'">Create Borrow</button>
+        </div>
+
+    </div>
+
+
+</div>
+
